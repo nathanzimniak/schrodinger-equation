@@ -1,8 +1,8 @@
-## Résolution numérique de l'équation de la chaleur
+## Résolution numérique de l'équation de Schrödinger dépendante du temps
 
 ![](https://img.shields.io/badge/Language-Python-blue.png) ![](https://img.shields.io/badge/Version-Stable-success.png)
 
-Un programme codé en Python pour résoudre l'équation de la chaleur à deux dimensions.
+Un programme codé en Python pour résoudre l'équation de Schrödinger dépendante du temps à deux dimensions.
 
 ### Aperçu
 
