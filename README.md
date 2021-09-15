@@ -8,6 +8,7 @@ Un programme codé en Python pour résoudre l'équation de la chaleur à deux di
 
 <p float="left">
   <img src="resources//3DSchrodingerEquation.gif" />
+  <img src="resources//2DSchrodingerEquation.gif" />
 </p>
 
 ### Théorie
