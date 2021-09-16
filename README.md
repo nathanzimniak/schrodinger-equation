@@ -8,7 +8,7 @@ Un programme codé en Python pour résoudre l'équation de Schrödinger dépenda
 
 <p float="left">
   <img src="resources//2D_Schrodinger_Equation.gif"  width="500" />
-  <img src="resources//3D_Schrodinger_Equation.gif" />
+  <img src="resources//3D_Schrodinger_Equation.gif"  width="500" />
 </p>
 
 ### Théorie
