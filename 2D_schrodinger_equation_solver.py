@@ -170,10 +170,10 @@ anim.save("2D_Schrodinger_Equation.gif", writer=writergif)
 ##
 ##anim3D = animation.FuncAnimation(fig, Animate3D, frames = int(Nbi/100), interval = 50, blit = False, repeat = True)
 ##
-##plt.rcParams['animation.ffmpeg_path'] = 'C:\\ffmpeg\\bin\\ffmpeg.exe'
-##Writer = animation.writers['ffmpeg']
-##writermp4 = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800)
-##anim3D.save("3D_Schrodinger_Equation.mp4", writer=writermp4)
+####plt.rcParams['animation.ffmpeg_path'] = 'C:\\ffmpeg\\bin\\ffmpeg.exe'
+####Writer = animation.writers['ffmpeg']
+####writermp4 = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800)
+####anim3D.save("3D_Schrodinger_Equation.mp4", writer=writermp4)
 ##writergif = animation.PillowWriter(fps=30)
 ##anim3D.save("3D_Schrodinger_Equation.gif", writer=writergif)
 
