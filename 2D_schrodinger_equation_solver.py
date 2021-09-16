@@ -82,56 +82,58 @@ for i in range(0, Nbi):
 
 #Plot (Image 2D)
 
-plt.style.use('dark_background')
-plt.figure()
-X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
-imageNbi = 30000
-plt.contourf(X, Y, psicarre[imageNbi, :, :], 100, cmap = plt.cm.viridis)
-plt.colorbar()
-plt.xlabel("x")
-plt.ylabel("y")
-plt.title("Densité de probabilité à t = " + str(round(imageNbi*dt,5)) + " s")
-plt.savefig('2D_Schrodinger_Equation.png')
+##plt.style.use('dark_background')
+##plt.figure()
+##X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
+##imageNbi = Nbi-1
+##plt.contourf(X, Y, psicarre[imageNbi, :, :], 100, cmap = plt.cm.viridis)
+##plt.colorbar()
+##plt.xlabel("x")
+##plt.ylabel("y")
+##plt.title("Densité de probabilité à t = " + str(round(imageNbi*dt,5)) + " s")
+##plt.savefig('2D_Schrodinger_Equation.png')
 
 
 
 #Plot (Animation 2D)
 
-plt.style.use('dark_background')
-fig = plt.figure()
-
-def animate(k):
-    k=k*100
-    plt.clf()
-    plt.pcolormesh(psicarre[k, :, :], cmap = plt.cm.viridis)
-    plt.colorbar()
-    plt.xlabel("x")
-    plt.ylabel("y")
-    plt.title(f"Densité de probabilité à t = {k*dt:.5f} s")
-    return
-
-anim = animation.FuncAnimation(fig, animate, frames = int(Nbi/100), interval = 50, repeat = True)
-
-#plt.rcParams['animation.ffmpeg_path'] = 'C:\\ffmpeg\\bin\\ffmpeg.exe'
-#Writer = animation.writers['ffmpeg']
-#writermp4 = Writer(fps=30, bitrate=1800)
-#anim.save("2D_Schrodinger_Equation.mp4", writer=writermp4)
-writergif = animation.PillowWriter(fps=30)
-writergif.setup(fig, "2D_Schrodinger_Equation.gif")
-anim.save("2D_Schrodinger_Equation.gif", writer=writergif)
+##plt.style.use('dark_background')
+##fig = plt.figure()
+##
+##def animate(k):
+##    k=k*100
+##    plt.clf()
+##    plt.pcolormesh(psicarre[k, :, :], cmap = plt.cm.viridis)
+##    plt.colorbar()
+##    plt.xlabel("x")
+##    plt.ylabel("y")
+##    plt.title(f"Densité de probabilité à t = {k*dt:.5f} s")
+##    return
+##
+##anim = animation.FuncAnimation(fig, animate, frames = int(Nbi/100), interval = 50, repeat = True)
+##
+###plt.rcParams['animation.ffmpeg_path'] = 'C:\\ffmpeg\\bin\\ffmpeg.exe'
+###Writer = animation.writers['ffmpeg']
+###writermp4 = Writer(fps=30, bitrate=1800)
+###anim.save("2D_Schrodinger_Equation.mp4", writer=writermp4)
+##writergif = animation.PillowWriter(fps=30)
+##writergif.setup(fig, "2D_Schrodinger_Equation.gif")
+##anim.save("2D_Schrodinger_Equation.gif", writer=writergif)
 
 
 
 #Plot (Image 3D)
     
-##plt.style.use('dark_background')
+plt.style.use('dark_background')
 ##fig = plt.figure()
 ##ax = plt.axes(projection = '3d')
 ##X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
-##imageNbi = 30000
+##imageNbi = Nbi-1
+##ax.zaxis.set_rotate_label(False)
 ##surf = ax.plot_surface(X, Y, psicarre[imageNbi, :, :], cmap=plt.cm.viridis)
 ##ax.set_xlabel("x")
 ##ax.set_ylabel("y")
+##ax.set_zlabel("$|\Psi|^2$", rotation=0)
 ##ax.w_xaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
 ##ax.w_yaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
 ##ax.w_zaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
@@ -143,40 +145,42 @@ anim.save("2D_Schrodinger_Equation.gif", writer=writergif)
 
 #Plot (Animation 3D)
 
-##plt.style.use('dark_background')
-##fig = plt.figure()
-##ax = plt.axes(projection = '3d')
-##X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
-##V = 2e-6*V
-##
-##def Animate3D(k):
-##    k=k*100
-##    ax.clear()
-##    ax.set_zlim3d(0, np.max(psicarre))
-##    #ax.set_zlim3d(np.min(V), np.max(psicarre))
-##    #ax.plot_surface(X, Y, V, cmap=plt.cm.gray)
-##    ax.plot_surface(X, Y, psicarre[k, :, :], cmap=plt.cm.viridis)
-##    ax.set_xlabel("x")
-##    ax.set_ylabel("y")
-##    #fig.set_facecolor('black')
-##    #ax.set_facecolor('black')
-##    ax.w_xaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
-##    ax.w_yaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
-##    ax.w_zaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
-##    ax.grid(False)
-##    plt.title(f"Densité de probabilité à t = {k*dt:.5f} s")
-##    ax.view_init(azim=k/100)
-##    return
-##
-##anim3D = animation.FuncAnimation(fig, Animate3D, frames = int(Nbi/100), interval = 50, blit = False, repeat = True)
-##
-####plt.rcParams['animation.ffmpeg_path'] = 'C:\\ffmpeg\\bin\\ffmpeg.exe'
-####Writer = animation.writers['ffmpeg']
-####writermp4 = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800)
-####anim3D.save("3D_Schrodinger_Equation.mp4", writer=writermp4)
-##writergif = animation.PillowWriter(fps=30)
-##anim3D.save("3D_Schrodinger_Equation.gif", writer=writergif)
+plt.style.use('dark_background')
+fig = plt.figure()
+ax = plt.axes(projection = '3d')
+X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
+V = 2e-6*V
+
+def Animate3D(k):
+    k=k*100
+    ax.clear()
+    ax.set_zlim3d(0, np.max(psicarre))
+    ax.zaxis.set_rotate_label(False)
+    #ax.set_zlim3d(np.min(V), np.max(psicarre))
+    #ax.plot_surface(X, Y, V, cmap=plt.cm.gray)
+    ax.plot_surface(X, Y, psicarre[k, :, :], cmap=plt.cm.viridis)
+    ax.set_xlabel("x")
+    ax.set_ylabel("y")
+    ax.set_zlabel("$|\Psi|^2$", rotation=0)
+    #fig.set_facecolor('black')
+    #ax.set_facecolor('black')
+    ax.w_xaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
+    ax.w_yaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
+    ax.w_zaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
+    ax.grid(False)
+    plt.title(f"Densité de probabilité à t = {k*dt:.5f} s")
+    ax.view_init(azim=k/100)
+    return
+
+anim3D = animation.FuncAnimation(fig, Animate3D, frames = int(Nbi/100), interval = 50, blit = False, repeat = True)
+
+##plt.rcParams['animation.ffmpeg_path'] = 'C:\\ffmpeg\\bin\\ffmpeg.exe'
+##Writer = animation.writers['ffmpeg']
+##writermp4 = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800)
+##anim3D.save("3D_Schrodinger_Equation.mp4", writer=writermp4)
+writergif = animation.PillowWriter(fps=30)
+anim3D.save("3D_Schrodinger_Equation.gif", writer=writergif)
 
 
-print("%s secondrd" % (time.time() - start_time))
+print("%s secondes" % (time.time() - start_time))
 plt.show()
