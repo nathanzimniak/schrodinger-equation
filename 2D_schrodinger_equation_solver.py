@@ -1,5 +1,11 @@
-##RÉSOLUTION DE L'ÉQUATION DE LA CHALEUR 2D
+#!/usr/bin/env python3
+# coding: utf-8
 
+'''
+Programme pour résoudre l'équation de Schrödinger dépendante du temps par la méthodes des différences finies
+'''
+
+__author__ = 'Nathan Zimniak'
 
 
 import numpy as np
@@ -9,131 +15,168 @@ from matplotlib.animation import FuncAnimation
 from mpl_toolkits import mplot3d
 from mpl_toolkits.mplot3d import Axes3D
 import time
-
 start_time = time.time()
 
 
-#Initialisation des constantes et des variables
 
-Lx = 31                 #Longueur de l'espace
-Ly = 31                 #Largeur de l'espace
-Nbi = 100000              #Nombre d'itérations temporelles
-dx = 1/(Lx-1)            #Pas spatial suivant x
-dy = 1/(Ly-1)            #Pas spatial suivant y
-dt = 1e-7                #Pas temporel
 
+#Initialisation des constantes
+Lx = 201                 #Longueur spatiale
+Ly = 201                 #Largeur spatiale
+Nbi = 40001            #Nombre d'itérations temporelles
+dx = 1/(Lx-1)           #Pas spatial suivant x
+dy = 1/(Ly-1)           #Pas spatial suivant y
+dt = 1e-7               #Pas temporel
+hb = 1                  #Constante de Planck réduite
+m = 1                   #Masse
+
+
+
+#Création du potentiel
 X, Y = np.meshgrid(np.linspace(0, 1, Lx), np.linspace(0, 1, Ly))
-mux, sigmax = 1/2, 1/10
-muy, sigmay = 1/2, 1/10
+mux = 1/2
+muy = 1/2
+sigmax = 1/10
+sigmay = 1/10
 V = -1e4*np.exp(-((X-mux)**2/(2*sigmax**2)+(Y-muy)**2/(2*sigmay**2)))
-
-psii = np.sin(np.pi*X)*np.sin(np.pi*Y)     #Condition initiale
-
-psi0 = np.zeros((Nbi, Ly, Lx))    #Création du tableau des conditions initiales
-psi0[0, :, :] = psii
-
-
-#Création d'une fonction qui retourne le tableau des solutions en appliquant la méthode des différences finies
-
-def mdf(y):
-    for k in range(0, Nbi-1):
-        for i in range(1, Ly-1):
-            for j in range(1, Lx-1):
-                y[k + 1, i, j] = y[k][i][j] + 1j/2 * dt * ((y[k][i+1][j] + y[k][i-1][j] - 2*y[k][i][j])/dx**2  + (y[k][i][j+1] + y[k][i][j-1] - 2*y[k][i][j])/dy**2) - 1j * dt * V[i][j] * y[k][i][j]
-    return y
 
 
 
 #Création du tableau des solutions
+psi0 = np.zeros((Nbi, Ly, Lx))
+psii = np.sin(np.pi*X)*np.sin(np.pi*Y)     #Condition initiale
+psi0[0, :, :] = psii
 
-psi = mdf(psi0.astype(complex))
+
+
+def finite_difference_method(Z):
+    ''' Calcule la fonction d'onde pour chaque itération temporelle
+        ----------
+        :param Z: 3D array, tableau des solutions vide
+        :return: Z, tableau des solutions
+        ----------
+    '''
+    for k in range(0, Nbi-1):
+        for i in range(1, Ly-1):
+            for j in range(1, Lx-1):
+                Z[k + 1, i, j] = 1j*(hb*dt)/(2*m) * ((Z[k][i+1][j] + Z[k][i-1][j] - 2*Z[k][i][j])/dx**2  + (Z[k][i][j+1] + Z[k][i][j-1] - 2*Z[k][i][j])/dy**2) + Z[k][i][j]*(1 - 1j * (V[i][j]*dt)/hb)
+    return Z
+
+
+
+psi = finite_difference_method(psi0.astype(complex))
+
+
+
+#Calcul de la densité de probabilité normalisée
 psicarre = np.absolute(psi)**2
 
 for i in range(0, Nbi):
     psicarre[i, :, :] = psicarre[i,:, :]/np.sum(psicarre[i, :, :])
 
 
-print("%s secondes" % (time.time() - start_time))
 
 
 
-###Plot (Image 2D)
-##
-##plt.figure(1)
-##X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
-##imageNbi = 6000
-##plt.contourf(X, Y, psicarre[imageNbi, :, :], 100, cmap = plt.cm.viridis)
-##plt.colorbar()
-##plt.xlabel("x")
-##plt.ylabel("y")
-##plt.title("Densité de probabilité \n de la fonction d'onde à t = " + str(round(imageNbi*dt,5)) + " s")
+#Affiche le résultat
+
+#Plot (Image 2D)
+
+plt.style.use('dark_background')
+plt.figure()
+X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
+imageNbi = 30000
+plt.contourf(X, Y, psicarre[imageNbi, :, :], 100, cmap = plt.cm.viridis)
+plt.colorbar()
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("Densité de probabilité à t = " + str(round(imageNbi*dt,5)) + " s")
+plt.savefig('2D_Schrodinger_Equation.png')
 
 
 
+#Plot (Animation 2D)
+
+plt.style.use('dark_background')
+fig = plt.figure()
+
+def animate(k):
+    k=k*100
+    plt.clf()
+    plt.pcolormesh(psicarre[k, :, :], cmap = plt.cm.viridis)
+    plt.colorbar()
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.title(f"Densité de probabilité à t = {k*dt:.5f} s")
+    return
+
+anim = animation.FuncAnimation(fig, animate, frames = int(Nbi/100), interval = 50, repeat = True)
+
+#plt.rcParams['animation.ffmpeg_path'] = 'C:\\ffmpeg\\bin\\ffmpeg.exe'
+#Writer = animation.writers['ffmpeg']
+#writermp4 = Writer(fps=30, bitrate=1800)
+#anim.save("2D_Schrodinger_Equation.mp4", writer=writermp4)
+writergif = animation.PillowWriter(fps=30)
+writergif.setup(fig, "2D_Schrodinger_Equation.gif")
+anim.save("2D_Schrodinger_Equation.gif", writer=writergif)
 
 
-###Plot (Animation 2D)
-##
+
+#Plot (Image 3D)
+    
+##plt.style.use('dark_background')
 ##fig = plt.figure()
-##
-##def animate(k):
-##    k=k*100
-##    plt.clf()
-##    plt.pcolormesh(psicarre[k, :, :], cmap = plt.cm.viridis)
-##    plt.colorbar()
-##    plt.xlabel("x")
-##    plt.ylabel("y")
-##    plt.title(f"Densité de probabilité \n de la fonction d'onde à t = {k*dt:.5f} s")
-##    return
-##
-##anim = animation.FuncAnimation(fig, animate, frames = 100, interval = 50, repeat = True)
-##
-##writergif = animation.PillowWriter(fps=30)
-##anim.save("2DSchrodingerEquation.gif", writer=writergif)
-
-
-
-
-
-###Plot (Image 3D)
-##
-##fig = plt.figure(3)
-##ax1 = plt.axes(projection = '3d')
+##ax = plt.axes(projection = '3d')
 ##X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
-##imageNbi = 9999
-##surf = ax1.plot_surface(X, Y, psicarre[imageNbi, :, :], cmap=plt.cm.viridis)
-##fig.colorbar(surf, shrink=0.5)
-##ax1.set_xlabel("x")
-##ax1.set_xlabel("y")
-##plt.title("Densité de probabilité \n de la fonction d'onde à t = " + str(round(imageNbi*dt,5)) + " s")
-
-
+##imageNbi = 30000
+##surf = ax.plot_surface(X, Y, psicarre[imageNbi, :, :], cmap=plt.cm.viridis)
+##ax.set_xlabel("x")
+##ax.set_ylabel("y")
+##ax.w_xaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
+##ax.w_yaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
+##ax.w_zaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
+##ax.grid(False)
+##plt.title("Densité de probabilité à t = " + str(round(imageNbi*dt,5)) + " s")
+##plt.savefig('3D_Schrodinger_Equation.png')
 
 
 
 #Plot (Animation 3D)
 
-fig = plt.figure()
-ax = plt.axes(projection = '3d')
+##plt.style.use('dark_background')
+##fig = plt.figure()
+##ax = plt.axes(projection = '3d')
+##X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
+##V = 2e-6*V
+##
+##def Animate3D(k):
+##    k=k*100
+##    ax.clear()
+##    ax.set_zlim3d(0, np.max(psicarre))
+##    #ax.set_zlim3d(np.min(V), np.max(psicarre))
+##    #ax.plot_surface(X, Y, V, cmap=plt.cm.gray)
+##    ax.plot_surface(X, Y, psicarre[k, :, :], cmap=plt.cm.viridis)
+##    ax.set_xlabel("x")
+##    ax.set_ylabel("y")
+##    #fig.set_facecolor('black')
+##    #ax.set_facecolor('black')
+##    ax.w_xaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
+##    ax.w_yaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
+##    ax.w_zaxis.set_pane_color((0.0, 0.0, 0.0, 0.0))
+##    ax.grid(False)
+##    plt.title(f"Densité de probabilité à t = {k*dt:.5f} s")
+##    ax.view_init(azim=k/100)
+##    return
+##
+##anim3D = animation.FuncAnimation(fig, Animate3D, frames = int(Nbi/100), interval = 50, blit = False, repeat = True)
+##
+##plt.rcParams['animation.ffmpeg_path'] = 'C:\\ffmpeg\\bin\\ffmpeg.exe'
+##Writer = animation.writers['ffmpeg']
+##writermp4 = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800)
+##anim3D.save("3D_Schrodinger_Equation.mp4", writer=writermp4)
+##writergif = animation.PillowWriter(fps=30)
+##anim3D.save("3D_Schrodinger_Equation.gif", writer=writergif)
 
-X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
 
-def Animate3D(k):
-    k=k*100
-    ax.clear()
-    ax.set_zlim3d(0, np.max(psicarre))
-    ax.plot_surface(X,Y,psicarre[k, :, :],cmap=plt.cm.viridis)
-    ax.set_xlabel("x")
-    ax.set_xlabel("y")
-    plt.title(f"Densité de probabilité \n de la fonction d'onde à t = {k*dt:.5f} s")
-    return
-anim3D = animation.FuncAnimation(fig, Animate3D, frames = int(Nbi/100), interval = 50, blit = False, repeat = True)
-writergif = animation.PillowWriter(fps=30)
-anim3D.save("3DSchrodingerEquation.gif", writer=writergif)
-
-
-
-
-
-
+print("--- %s seconds ---" % (time.time() - start_time))
 plt.show()
