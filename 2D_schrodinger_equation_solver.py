@@ -178,5 +178,5 @@ anim.save("2D_Schrodinger_Equation.gif", writer=writergif)
 ##anim3D.save("3D_Schrodinger_Equation.gif", writer=writergif)
 
 
-print("--- %s seconds ---" % (time.time() - start_time))
+print("%s secondrd" % (time.time() - start_time))
 plt.show()
