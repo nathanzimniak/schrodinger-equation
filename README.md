@@ -14,7 +14,3 @@ Un programme codé en Python pour résoudre l'équation de Schrödinger dépenda
 ### Théorie
 
 *En construction*
-
-### Bibliographie
-
-*En construction*
