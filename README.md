@@ -1,6 +1,6 @@
 ## Résolution numérique de l'équation de Schrödinger dépendante du temps 2D
 
-![](https://img.shields.io/badge/Language-Python-blue.png) ![](https://img.shields.io/badge/Version-Stable-success.png)
+![](https://img.shields.io/badge/Language-Python-blue.png)
 
 Un programme codé en Python pour résoudre l'équation de Schrödinger dépendante du temps à deux dimensions.
 
