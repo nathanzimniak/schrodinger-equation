@@ -24,8 +24,8 @@ start_time = time.time()
 Lx = 201                 #Longueur spatiale
 Ly = 201                 #Largeur spatiale
 Nbi = 100001             #Nombre d'itérations temporelles
-dx = 1                   #Pas spatial suivant x
-dy = 1                   #Pas spatial suivant y
+dx = 1/(Lx-1)                   #Pas spatial suivant x
+dy = 1/(Ly-1)                   #Pas spatial suivant y
 dt = 1e-7                #Pas temporel
 hb = 1                   #Constante de Planck réduite
 m = 1                    #Masse
@@ -149,7 +149,7 @@ plt.style.use('dark_background')
 fig = plt.figure()
 ax = plt.axes(projection = '3d')
 X, Y = np.meshgrid(np.arange(0, Lx), np.arange(0, Ly))
-V = 2e-6*V
+#V = 2e-6*V
 
 def Animate3D(k):
     k=k*100
