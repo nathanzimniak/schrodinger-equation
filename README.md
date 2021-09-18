@@ -7,8 +7,13 @@ Un programme codé en Python pour résoudre l'équation de Schrödinger dépenda
 ### Aperçu
 
 <p float="left">
-  <img src="resources//2D_Schrodinger_Equation.gif"  width="400" />
-  <img src="resources//3D_Schrodinger_Equation.gif"  width="400" />
+  <img src="resources//2D_Time_DependantSchrodinger_Equation.gif"  width="400" />
+  <img src="resources//3D_Time_DependantSchrodinger_Equation.gif"  width="400" />
+</p>
+
+<p float="left">
+  <img src="resources//2D_Time_IndependantSchrodinger_Equation.gif"  width="400" />
+  <img src="resources//3D_Time_IndependantSchrodinger_Equation.gif"  width="400" />
 </p>
 
 ### Théorie
