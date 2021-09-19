@@ -1,8 +1,8 @@
-## Résolution numérique de l'équation de Schrödinger dépendante du temps 2D
+## Résolution numérique de l'équation de Schrödinger dépendante et indépendante du temps 2D
 
 ![](https://img.shields.io/badge/Language-Python-blue.png)
 
-Un programme codé en Python pour résoudre l'équation de Schrödinger dépendante/indépendante du temps à deux dimensions.
+Deux programmes codés en Python pour résoudre l'équation de Schrödinger dépendante/indépendante du temps à deux dimensions.
 
 ### Aperçu
 
