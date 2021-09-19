@@ -12,8 +12,8 @@ Un programme codé en Python pour résoudre l'équation de Schrödinger dépenda
 </p>
 
 <p float="left">
-  <img src="test.gif"  width="400" />
-  <img src="resources//3D_Time_Independant_Schrodinger_Equation.gif"  width="400" />
+  <img src="test//2D_Time_Independant_Schrodinger_Equation.gif"  width="400" />
+  <img src="test//3D_Time_Independant_Schrodinger_Equation.gif"  width="400" />
 </p>
 
 ### Théorie
