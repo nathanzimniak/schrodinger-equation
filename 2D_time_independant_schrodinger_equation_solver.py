@@ -76,7 +76,7 @@ def nth_psicarre(n):
 ##r=1000
 ##def animate(k):
 ##    plt.clf()
-##    plt.contourf(X, Y, nth_psicarre(int(k*n/r))**2, 100, cmap = plt.cm.viridis)
+##    plt.contourf(X, Y, nth_psicarre(int(k*n/r)), 100, cmap = plt.cm.viridis)
 ##    plt.colorbar()
 ##    plt.xlabel("x")
 ##    plt.ylabel("y")
@@ -103,11 +103,11 @@ ax = plt.axes(projection = '3d')
 r=1000
 def Animate3D(k):
     ax.clear()
-    ax.set_zlim3d(0, np.max(nth_psicarre(int(k*n/r))**2))
+    ax.set_zlim3d(0, np.max(nth_psicarre(int(k*n/r))))
     ax.zaxis.set_rotate_label(False)
     #ax.set_zlim3d(np.min(V), np.max(psicarre))
     #ax.plot_surface(X, Y, V, cmap=plt.cm.gray)
-    ax.plot_surface(X, Y, nth_psicarre(int(k*n/r))**2, cmap=plt.cm.viridis)
+    ax.plot_surface(X, Y, nth_psicarre(int(k*n/r)), cmap=plt.cm.viridis)
     ax.set_xlabel("x")
     ax.set_ylabel("y")
     ax.set_zlabel("$|\Psi|^2$", rotation=0)
