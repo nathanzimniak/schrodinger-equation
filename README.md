@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/badge/Language-Python-blue.png)
 
-Un programme codé en Python pour résoudre l'équation de Schrödinger dépendante du temps à deux dimensions.
+Un programme codé en Python pour résoudre l'équation de Schrödinger dépendante/indépendante du temps à deux dimensions.
 
 ### Aperçu
 
