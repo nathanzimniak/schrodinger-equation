@@ -53,7 +53,7 @@ def finite_difference_method(Z):
     ''' Calcule la fonction d'onde pour chaque itération temporelle
         ----------
         :param Z: 3D array, tableau des solutions vide
-        :return: Z, tableau des solutions
+        :return Z: 3D array, tableau des solutions
         ----------
     '''
     for k in range(0, Nbi-1):
